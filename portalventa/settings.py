@@ -50,7 +50,7 @@ INSTALLED_APPS = [
     'reservas',
     'promociones',
     'correo',
-    'storages'
+    'storages',
     
 ]
 
@@ -162,12 +162,13 @@ MEDIA_ROOT=os.path.join(BASE_DIR,"media")
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
 
-# Looking to send emails in production? Check out our Email API/SMTP product!
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'sandbox.smtp.mailtrap.io'
-EMAIL_HOST_USER = '82b71db7a90955'
-EMAIL_HOST_PASSWORD = 'ffa0b595abeace'
-EMAIL_PORT = '2525'
+#Datos de gestor de correos
+EMAIL_BACKEND = env('EMAIL_BACKEND')
+EMAIL_HOST = env('EMAIL_HOST')
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
+EMAIL_PORT = env('EMAIL_PORT')
 
 AWS_ACCESS_KEY_ID=env("AWS_ACCESS_KEY_ID")
 AWS_SECRET_ACCESS_KEY=env("AWS_SECRET_ACCESS_KEY")

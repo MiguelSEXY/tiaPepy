@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'reservas',
     'promociones',
     'correo',
+    'storages'
     
 ]
 
@@ -167,3 +168,19 @@ EMAIL_HOST = 'sandbox.smtp.mailtrap.io'
 EMAIL_HOST_USER = '82b71db7a90955'
 EMAIL_HOST_PASSWORD = 'ffa0b595abeace'
 EMAIL_PORT = '2525'
+
+AWS_ACCESS_KEY_ID=env("AWS_ACCESS_KEY_ID")
+AWS_SECRET_ACCESS_KEY=env("AWS_SECRET_ACCESS_KEY")
+
+AWS_STORAGE_BUCKET_NAME=env("BUCKET_NAME")
+AWS_3_CUSTOM_DOMAIN='%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+AWS_S3_FILE_OVERWRITE=False
+
+STORAGES ={
+    "default":{
+        "BACKEND": "storages.backends.s3boto3.S3StaticStorage",
+    },
+    "staticfiles":{
+        "BACKEND": "storages.backends.s3boto3.S3StaticStorage"
+    }
+}

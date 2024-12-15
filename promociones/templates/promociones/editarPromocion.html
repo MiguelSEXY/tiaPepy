@@ -1,0 +1,25 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block content %}
+<header class="masthead" style="background-image: url({% static 'promociones/editarPromo.jpg' %})">
+    <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7" style="background-color: #c2c2c2;  padding: 50px 20px; border-radius: 10px;" >
+                <div class="container">
+                    <h2 style="text-align: center;">Editar Promoción</h2>
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ formPromo.as_p }}
+                        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                        <a href="{% url 'Promociones' %}" class="btn btn-secondary">Cancelar</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+{% endblock %}

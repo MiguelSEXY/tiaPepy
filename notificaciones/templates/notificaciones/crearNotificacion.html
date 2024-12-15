@@ -1,0 +1,62 @@
+{% extends 'core/base.html' %}
+{% load static form_filters %}
+
+{% block content %}
+<header class="masthead" style="background-image: url({% static 'notificaciones/fondo_ntf.jpg' %}); background-color: #f7f7f7;">
+    <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <div class="page-heading">
+                    <h1>Formulario de Notificación</h1>
+                    <span class="subheading">Crea una nueva notificación fácilmente</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="container mt-5 p-4 rounded" style="background-color: #c2c2c2b7;">
+    <form action="{% url 'CrearNotificacion' %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% if user.is_authenticated %}
+        
+        <div class="mb-3">
+            <label for="titulo" class="form-label">Título:</label>
+            {{ formNoti.titulo }}
+        </div>
+
+        <div class="mb-3">
+            <label for="imagen" class="form-label">Imagen:</label>
+            {{ formNoti.imagen }}
+        </div>
+
+        <div class="mb-3">
+            <label for="contenido" class="form-label">Contenido:</label>
+            {{ formNoti.contenido }}
+        </div>
+
+        <div class="form-check mb-3">
+            <label for="importante" class="form-check-label">Importante:</label>
+            {{ formNoti.importante }}
+        </div>
+
+        <button type="submit" class="btn btn-primary">Guardar</button>
+
+        {% else %}
+            <div class="alert alert-danger d-flex align-items-center" role="alert" style="text-align: center;">
+                <div style="flex: 1;">
+                    <h2>Usuario No Autenticado</h2>
+                    <p>No tienes autorización para crear notificaciones.</p>
+                </div>
+                <div style="flex: 0;">
+                    <img src="{% static 'notificaciones/sad.png' %}" alt="Imagen de alerta" style="width: 80px; height: auto;">
+                </div>
+            </div>
+        {% endif %}
+
+    </form>
+</div>
+
+{% endblock %}
+
+

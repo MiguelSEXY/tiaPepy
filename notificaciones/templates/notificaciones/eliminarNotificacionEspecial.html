@@ -1,0 +1,28 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block content %}
+
+{% block tittle %} Eliminar notificación {% endblock %}
+
+<header class="masthead" style="background-image: url({% static 'notificaciones/f_delete.jpg' %})">
+    <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <div class="container mt-5">
+                    <div class="alert alert-danger">
+                        <h4>¿Estás seguro que deseas eliminar "{{ notificacion.titulo }}"?</h4>
+                        <p>Esta acción no se puede deshacer.</p>
+                        <form method="POST">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger">Eliminar</button>
+                            <a href="{% url 'notificaciones' %}" class="btn btn-secondary">Cancelar</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+{% endblock %}

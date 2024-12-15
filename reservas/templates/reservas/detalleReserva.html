@@ -1,0 +1,45 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container-fluid d-flex justify-content-center align-items-center min-vh-100">
+
+    <div class="text-center">
+        <div class="container mt-4">
+            <div class="card" style="width: 32rem;padding:20px">
+                <h1>Detalle de Reserva</h1>
+
+                <img src="{{reserva.producto.imagen.url}}" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h2 class="card-title">{{reserva.producto.nombre}}</h2>
+                    <p class="card-text"><strong>Cantidad Reservada:</strong> {{ reserva.cantidad }}</p>
+                    <p class="card-text"><strong>Fecha de Reserva:</strong> {{ reserva.fecha_reserva|date:"d M Y, H:i" }}</p>
+                    <a href="{% url 'misReservas' %}" class="btn btn-secondary mt-3">Volver a Mis Reservas</a>
+                </div>
+                <form id="deleteForm" action="{% url 'detalleReserva' reserva.id %}" method="POST" class="mt-3" style="display: none;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Eliminar Reserva</button>
+                </form>
+        
+                <button id="confirmDeleteBtn" class="btn btn-danger">Eliminar Reserva</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-5 p-4 rounded item" style="background-color: #c2c2c2b7;">
+    
+</div>
+
+<script>
+    document.getElementById('confirmDeleteBtn').addEventListener('click', function(e) {
+        // Mostrar un cuadro de confirmación
+        var confirmDelete = confirm("¿Estás seguro de que quieres eliminar esta reserva?");
+        
+        if (confirmDelete) {
+            // Si el usuario confirma, enviamos el formulario de eliminación
+            document.getElementById('deleteForm').submit();
+        }
+    });
+</script>
+{% endblock %}

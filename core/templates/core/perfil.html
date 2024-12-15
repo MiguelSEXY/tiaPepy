@@ -1,0 +1,36 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% load custom_filters %}
+
+{% block content %}
+<div class="container" style="padding-top:100px;">
+    <div class="container mt-4" style="margin-top:20px">
+
+        {% if perfil %}
+            <div class="row">
+
+                <div class="col-md-8 mx-auto">
+                    <h2>Mi Perfil</h2>
+                    <br/>
+                    <h4>{{ perfil.user.username }}</h4>
+                    <p><strong>Nombre Completo:</strong> {{ perfil.user.first_name }} {{perfil.user.last_name}}</p>
+                    <p><strong>Email:</strong> {{ perfil.user.email }}</p>
+                    <p><strong>Recibir Notificaciones:</strong> {% if perfil.recibir_notificaciones %} Sí {% else %} No {% endif %}</p>
+                    <a href="{% url 'cambiarPreferencias' %}" style="margin-bottom:20px" class="btn btn-primary mt-3">Cambiar Preferencia de Notificaciones</a>
+                    <br/>
+                    {% if request.user|pertenece_a_grupo:"Vendedor" %}
+                    <a href="{% url 'listadoReservas' %}" style="margin-bottom:20px" class="btn btn-warning mt-3">Listado Reservas</a>
+
+                    {% else %}
+                    <a href="{% url 'misReservas' %}" style="margin-bottom:20px" class="btn btn-warning mt-3">Reservas</a>
+                    {% endif %}
+                </div>
+            </div>
+
+        {% else %}
+            <p>No se ha encontrado tu perfil.</p>
+        {% endif %}
+    </div>
+</div>
+    
+{% endblock %}

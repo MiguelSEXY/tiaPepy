@@ -1,0 +1,44 @@
+{% extends 'core/base.html' %}
+{% load custom_filters %}
+
+{% block content %}
+    <div class="container">
+        <h2>Listado de Reservas</h2>
+
+        <!-- Tabla de Reservas -->
+        <table class="table table-striped" style="margin-top: 80px;";>
+            <thead>
+                <tr>
+                    <th>Nombre del Usuario</th>
+                    <th>Nombre de la Promoción</th>
+                    <th>Cantidad</th>
+                    <th>Costo Total</th>
+                    <th>Fecha de Reserva</th>
+                    <th>¿Completar?</th>
+                    <th>¿Cancelar?</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for reserva in reservas %}
+                    <tr>
+                        <td>{{ reserva.usuario.username }}</td>
+                        <td>{{ reserva.producto.nombre }}</td>
+                        <td>{{ reserva.cantidad }}</td>
+                        <td>${{ reserva.costo_total }}</td>
+                        <td>{{ reserva.fecha_reserva|date:"D d M Y" }}</td>
+                        <td style="color:green" class="mx-auto">
+                            <a class="container d-flex justify-content-center align-items-center" href="{% url 'completarReserva' reserva.id %}" class="btn btn-light btn-sm" style="float: right;">
+                                <i  class="bi bi-check-lg"></i> <!-- Bootstrap Icon -->
+                            </a>
+                        </td>
+                        <td>
+                            <a href="{% url 'cancelarReserva' reserva.id %}" class="btn btn-danger btn-sm" style="float: right; margin-right: 5px;" >
+                                <i class="bi bi-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

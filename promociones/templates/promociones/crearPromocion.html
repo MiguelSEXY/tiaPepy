@@ -1,0 +1,61 @@
+{% extends 'core/base.html' %}
+{% load static form_filters %}
+
+{% block content %}
+<header class="masthead" style="background-image: url({% static 'promociones/fondoPromo.jpg' %});">
+    <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <div class="page-heading">
+                    <h1>Formulario de Promoción</h1>
+                    <span class="subheading"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<h1></h1>
+
+<div class="container mt-5" style="background-color: #c2c2c2b7; padding: 20px; border-radius: 10px;">
+    <form action="{% url 'crearPromocion' %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% if user.is_authenticated %}
+        
+        <div class="mb-3">
+            <label for="nombre" class="form-label">Nombre de la promo: </label>
+            {{ formPromo.nombre|add_class:"form-control" }}
+        </div>
+
+        <div class="mb-3">
+            <label for="imagen" class="form-label">Imagen: </label>
+            {{ formPromo.imagen|add_class:"form-control" }}
+        </div>
+
+        <div class="mb-3">
+            <label for="precio" class="form-label">Precio: </label>
+            {{ formPromo.precio|add_class:"form-control" }}
+        </div>
+
+        <div class="mb-3">
+            <label for="stock" class="form-label">Stock: </label>
+            {{ formPromo.stock|add_class:"form-control" }}
+        </div>
+
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a href="/promociones" class="btn btn-danger">Cancelar</a>
+
+        {% else %}
+            <div class="alert alert-danger d-flex align-items-center" role="alert" style="text-align: center;">
+                <div style="flex: 1;">
+                    <h2>Usuario No Autenticado</h2>
+                    <p>No tienes autorización para crear Promos.</p>
+                </div>
+                <div style="flex: 0;">
+                    <img src="{% static 'notificaciones/sad.png' %}" alt="Imagen de alerta" style="width: 80px; height: auto;">
+                </div>
+            </div>
+        {% endif %}
+    </form>
+</div>
+
+{% endblock %}

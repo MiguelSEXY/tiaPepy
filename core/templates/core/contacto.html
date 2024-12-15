@@ -1,0 +1,60 @@
+{% extends 'core/base.html' %}
+
+{% load static%}
+
+{% block tittle %} Contacto {% endblock%}
+
+{% block content %}
+<header class="masthead" style="background-image: url({% static 'core/img/bg-ct.png' %})">
+    <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <div class="page-heading">
+                    <h1>Contáctanos</h1>
+                    <span class="subheading"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- Main Content-->
+<main class="mb-4">
+    <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <p> Si tienes alguna pregunta sobre un producto en particular o deseas más información, no dudes en contactarnos.</p>
+                <div class="my-5 form-bgg">
+                    <form id="contactForm" data-sb-form-api-token="API_TOKEN">
+                        <div class="form-floating ">
+                            <input class="form-control" id="name" type="text" placeholder="Ingresa tu nombre..." data-sb-validations="required" />
+                            <label for="name">Nombre</label>
+                            <div class="invalid-feedback" data-sb-feedback="name:required">Ingresa tu nombre.</div>
+                        </div>
+                        <div class="form-floating">
+                            <textarea class="form-control" id="message" placeholder="Ingrese mensaje..." style="height: 12rem" data-sb-validations="required"></textarea>
+                            <label for="message">Mensaje</label>
+                            <div class="invalid-feedback" data-sb-feedback="message:required">Ingrese Mensaje.</div>
+                        </div>
+                        <br />
+                        <button type="submit" class="btn btn-primary" id="liveToastBtn">Enviar</button>
+
+                        <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+                        <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
+                            <div class="toast-header">
+                            <img src="{% static 'core/img/logo.png' %}" class="rounded me-2" width="50" height="50">
+                            <strong class="me-auto">ADV</strong>
+                            <small>Recientemente</small>
+                            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                            </div>
+                            <div class="toast-body">
+                            Mensaje neviado!
+                            </div>
+                        </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

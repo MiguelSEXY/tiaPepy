@@ -1,0 +1,68 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% load custom_filters %}
+
+{% block tittle %} Notificaciones Especiales{% endblock %}
+
+{% block content %}
+<header class="masthead" style="background-position: bottom;background-image: url({% static 'notificaciones/bc_nt.jpg' %})">
+    <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <div class="site-heading">
+                    <a href="{% url 'notificaciones' %}" style="text-decoration: none;color: inherit;"><h1>Notificaciones Especiales</h1></a>
+                    <span class="subheading"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="container mt-5">
+    <div class="row">
+        {% for notificaciones in page_obj %}
+            <div class="col-md-4 mb-4">
+                <div class="card text-white bg-secondary mb-3 d-flex flex-column" style="min-height: 450px;">
+                    <img src="{{ notificaciones.imagen.url }}" class="card-img-top" alt="{{ notificaciones.titulo }}" height="250px" width="100%">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ notificaciones.titulo }}
+                            {% if request.user|pertenece_a_grupo:"Vendedor" %}
+                                <a href="{% url 'editarNotificacionEspecial' notificaciones.id %}" class="btn btn-light btn-sm" style="float: right;">
+                                    <i class="bi bi-pencil"></i> 
+                                <a href="{% url 'eliminarNotificacionEspecial' notificaciones.id %}" class="btn btn-danger btn-sm" style="float: right; margin-right: 5px;" >
+                                    <i class="bi bi-trash"></i>
+                                </a>
+                            {% endif %}
+                        </h5>
+                        
+                        <p class="card-text">{{ notificaciones.contenido|linebreaks }}</p> 
+                        <p class="card-text" style="font-size: 12px;">Creado el {{ notificaciones.creacion|date:"d M Y" }}</p>
+                        <p class="card-text" style="font-size: 12px;">Promocion relacionada: {{ notificaciones.promocion }}</p>
+
+                        {% if notificaciones.modificacion %}
+                            <p class="card-text" style="font-size: 12px;">Editado el {{ notificaciones.modificacion|date:"d M Y" }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <p style="text-align: center;">No hay notificaciones disponibles.</p>
+        {% endfor %}
+    </div>
+
+    <!-- Paginación -->
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            {% if page_obj.has_previous %}
+                <li class="page-item"><a class="page-link" href="?page=1">Primera</a></li>
+                <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Anterior</a></li>
+            {% endif %}
+            {% if page_obj.has_next %}
+                <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Siguiente</a></li>
+                <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Última</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+</div>
+
+{% endblock %}

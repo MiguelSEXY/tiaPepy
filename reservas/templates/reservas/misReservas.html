@@ -1,0 +1,59 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% load static form_filters %}
+
+{% block content %}
+    <div class="container mt-4">
+        <h1 class="mb-4">Mis Reservas</h1>
+
+        <!-- Verificar si el usuario tiene reservas -->
+        {% if reservas %}
+            <div class="table-responsive">
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Promoción</th>
+                            <th>Cantidad</th>
+                            <th>Fecha de Reserva</th>
+                            <th>Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for reserva in reservas %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ reserva.producto.nombre }}</td>
+                                <td>{{ reserva.cantidad }}</td>
+                                <td>{{ reserva.fecha_reserva|date:"d M Y, H:i" }}</td>
+                                <td>
+                                    <!-- Botón para ver detalles -->
+                                    <a href="{% url 'detalleReserva' reserva.id %}" class="btn btn-info btn-sm">
+                                        Ver Detalles
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <div class="container">
+                    <div class="d-flex justify-content-center">
+                        <a href="{% url 'crearReserva' %}" class="btn btn-primary mt-3" style="margin-bottom:20px">Crear Reserva</a>
+                    </div>
+                </div>
+
+            </div>
+        {% else %}
+        <div class="container-fluid d-flex justify-content-center align-items-center min-vh-100">
+            <div class="text-center">
+                <p>No tienes reservas realizadas aún.</p>
+                <a href="{% url 'crearReserva' %}" class="btn btn-primary mt-3" style="margin-bottom:20px">Crear Reserva</a>
+      
+            </div>
+        </div>
+            
+        {% endif %}
+    </div>
+{% endblock %}
+    <!-- Incluir Bootstrap 5 JS desde el CDN -->
+

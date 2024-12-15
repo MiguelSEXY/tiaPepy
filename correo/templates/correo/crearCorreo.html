@@ -1,0 +1,63 @@
+{% extends 'core/base.html' %}
+
+{% load static %}
+
+{% block titulo %} Contacto {% endblock%}
+
+{% block content %}
+<body>
+    <main class="mb-4">
+        <div class="container px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-md-10 col-lg-8 col-xl-7">
+                    <div class="text-center mb-5" style="margin-top: 30px;">
+                        <h1 class="fw-bolder">Contactanos</h1>
+                        <p class="lead fw-normal text-muted mb-0">Si quieres que nos comuniquemos contigo...</p>
+                    </div>
+                    <div class="my-5 form-bgg">
+                        <form action="" method='POST'>
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Nombre y Apellido</label>
+                                {{form.name}}
+                                {{form.name.errors}}
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Correo</label>
+                                {{form.email}}
+                                {{form.email.errors}}
+                            </div>
+                            <div class="mb-3">
+                                <label for="mensaje" class="form-label">Mensaje</label>
+                                {{form.mensaje}}
+                                {{form.mensaje.errors}}
+                            </div>
+                            <button type="submit" class="btn btn-primary" id="liveToastBtn" {% if 'ok' in request.GET %} enabled {% endif %}{% if 'error' in request.GET %} disabled {% endif %}>Enviar</button>
+                                <div>
+                                    <div style="background-color: rgba(0, 255, 34, 0.404);">
+                                    {% if 'ok' in request.GET %}
+                                    <div class="alert alert-succes mt-5" style="text-align: center;"role="alert">
+                                        <strong>El mensaje se ha enviado correctamente</strong>
+                                    </div>
+                                    {% endif %}
+                                    </div>
+                                    <div style="background-color: rgba(255, 0, 0, 0.404);">
+                                    {% if 'error' in request.GET %}
+                                        <div class="alert alert-succes mt-5" style="text-align: center;" role="alert">
+                                            <strong>El mensaje no ha podido ser enviado. Porfavor, intente más tarde</strong>
+                                        </div>
+                                    {% endif %}
+                                    </div>
+                                </div>
+
+                
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+
+{% endblock %}
+

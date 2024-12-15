@@ -1,0 +1,71 @@
+{% extends 'core/base.html' %}
+
+{% load static%}
+
+{% block tittle %} Contacto {% endblock%}
+
+{% block content %}
+<header class="masthead" style="background-image: url({% static 'contact/icon-e-mail.png' %})">
+    <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <div class="page-heading">
+                    <h1>Contáctanos</h1>
+                    <span class="subheading"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- Main Content-->
+<main class="mb-4">
+    <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <p> Si tienes alguna pregunta sobre un producto en particular o deseas más información, no dudes en contactarnos.</p>
+                <div class="my-5 form-bgg">
+                    <form action="" method='POST'>
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Nombre y Apellido</label>
+                            {{form.name}}
+                            {{form.name.errors}}
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Correo</label>
+                            {{form.email}}
+                            {{form.email.errors}}
+                        </div>
+                        <div class="mb-3">
+                            <label for="mensaje" class="form-label">Mensaje</label>
+                            {{form.mensaje}}
+                            {{form.mensaje.errors}}
+                        </div>
+                        <button type="submit" class="btn btn-primary" id="liveToastBtn" {% if 'ok' in request.GET %} disabled {% endif %}{% if 'error' in request.GET %} disabled {% endif %}>Enviar</button>
+                            <div>
+                                <div style="background-color: rgba(0, 255, 34, 0.404);">
+                                {% if 'ok' in request.GET %}
+                                <div class="alert alert-succes mt-5" style="text-align: center;"role="alert">
+                                    <strong>El mensaje se ha enviado correctamente</strong>
+                                </div>
+                                {% endif %}
+                                </div>
+                                <div style="background-color: rgba(255, 0, 0, 0.404);">
+                                {% if 'error' in request.GET %}
+                                    <div class="alert alert-succes mt-5" style="text-align: center;" role="alert">
+                                        <strong>El mensaje no ha podido ser enviado. Porfavor, intente más tarde</strong>
+                                    </div>
+                                {% endif %}
+                                </div>
+                            </div>
+                            
+                        </div>
+                        </div>
+            
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

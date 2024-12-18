@@ -7,9 +7,11 @@ class ReservaForm(forms.ModelForm):
         fields = ['producto', 'cantidad']
     
     def clean_cantidad(self):
-        cantidad = self.cleaned_data['cantidad']
-        producto = self.cleaned_data['producto']
+        cantidad = self.cleaned_data.get('cantidad')
+        producto = self.cleaned_data.get('producto')
 
-        if cantidad > producto.stock:
-            raise forms.ValidationError(f"No hay suficientes unidades de {producto.nombre}.")
+        if producto and cantidad > producto.stock:
+            raise forms.ValidationError(
+                f"Superas el stock disponible de {producto.nombre}. \nCant. Disponible= {producto.stock} unidades."
+            )
         return cantidad

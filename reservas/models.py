@@ -1,6 +1,7 @@
 from django.db import models
 from promociones.models import Promocion
 from django.contrib.auth.models import User  
+from django.core.exceptions import ValidationError
 
 class Reserva(models.Model):
     producto = models.ForeignKey(Promocion, on_delete=models.CASCADE)
@@ -12,8 +13,13 @@ class Reserva(models.Model):
         return f"Reserva de {self.cantidad} unidades de {self.producto.nombre}"
 
     def save(self, *args, **kwargs):
+        # Verificar si hay suficiente stock
         if self.cantidad > self.producto.stock:
-            raise ValueError("No hay suficientes unidades disponibles para esta reserva.")
+            raise ValidationError(
+                f"No hay suficientes unidades disponibles. Stock disponible: {self.producto.stock}."
+            )
+        
+        # Descontar stock y guardar la reserva
         self.producto.stock -= self.cantidad  
         self.producto.save()
         super().save(*args, **kwargs)

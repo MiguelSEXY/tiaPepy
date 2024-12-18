@@ -14,40 +14,44 @@
     </div>
 </header>
 
-<div class="container mt-5 p-4 rounded " style="background-color: #c2c2c2b7;">
+<div class="container mt-5 p-4 rounded" style="background-color: #c2c2c2b7;">
     <form action="{% url 'crearReserva' %}" method="POST">
         {% csrf_token %}
         {% if user.is_authenticated %}
-        
         <div class="mb-3">
             <label for="producto" class="form-label">Promo:</label>
             {{ form.producto }}
+            {% if form.producto.errors %}
+                <div class="text-danger">{{ form.producto.errors|join:", " }}</div>
+            {% endif %}
         </div>
-
+    
         <div class="mb-3">
             <label for="cantidad" class="form-label">Cantidad a reservar: </label>
-            {{ form.cantidad}}
+            {{ form.cantidad }}
+            {% if form.cantidad.errors %}
+                <div class="text-danger">{{ form.cantidad.errors|join:", " }}</div>
+            {% endif %}
         </div>
-
-
-
+    
         <button type="submit" class="btn btn-primary">Guardar</button>
         <a href="/notificacionesEspeciales" class="btn btn-danger">Cancelar</a>
-
         {% else %}
-            <div class="alert alert-danger d-flex align-items-center" role="alert" style="text-align: center;">
-                <div style="flex: 1;">
-                    <h2>Usuario No Autenticado</h2>
-                    <p>No tienes autorización para crear notificaciones.</p>
-                </div>
-                <div style="flex: 0;">
-                    <img src="{% static 'notificaciones/sad.png' %}" alt="Imagen de alerta" style="width: 80px; height: auto;">
-                </div>
+        <div class="alert alert-danger d-flex align-items-center" role="alert" style="text-align: center;">
+            <div style="flex: 1;">
+                <h2>Usuario No Autenticado</h2>
+                <p>No tienes autorización para crear notificaciones.</p>
             </div>
+            <div style="flex: 0;">
+                <img src="{% static 'notificaciones/sad.png' %}" alt="Imagen de alerta" style="width: 80px; height: auto;">
+            </div>
+        </div>
         {% endif %}
-
     </form>
+    
 </div>
+
+
 
 {% endblock %}
 

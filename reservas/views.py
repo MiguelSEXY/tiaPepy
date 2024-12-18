@@ -11,15 +11,23 @@ def crearReserva(request):
     if request.method == 'POST':
         form = ReservaForm(request.POST)
         if form.is_valid():
-            # Guardar la reserva
             reserva = form.save(commit=False)
             reserva.usuario = request.user
-            reserva.save()
-            return redirect('misReservas')
+            # Validar stock desde el modelo
+            if reserva.cantidad > reserva.producto.stock:
+                messages.error(request, f"Superas el stock disponible. Stock disponible: {reserva.producto.stock}")
+            else:
+                reserva.save()
+                messages.success(request, "Reserva creada exitosamente.")
+                return redirect('misReservas')
+        else:
+            # Si el formulario no es válido, mostrar errores
+            messages.error(request, "Por favor corrige los errores en el formulario.")
     else:
         form = ReservaForm()
 
     return render(request, 'reservas/crearReserva.html', {'form': form})
+
 
 @group_required('Comprador')
 def misReservas(request):

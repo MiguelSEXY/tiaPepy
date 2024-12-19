@@ -97,9 +97,6 @@ def editarNotificacionEspecial(request, id):
 def eliminarNotificacionEspecial(request, id):
     notificacion = get_object_or_404(NotificacionEspecial, id=id)
 
-    if request.user != notificacion.autor:
-        return redirect('notificacionesEspeciales')
-
     if request.method == 'POST':
         notificacion.delete()
         return redirect('notificacionesEspeciales')

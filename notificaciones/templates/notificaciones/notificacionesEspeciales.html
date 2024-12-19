@@ -27,11 +27,13 @@
                     <div class="card-body">
                         <h5 class="card-title">{{ notificaciones.titulo }}
                             {% if request.user|pertenece_a_grupo:"Vendedor" %}
+                            <div class="container"> 
                                 <a href="{% url 'editarNotificacionEspecial' notificaciones.id %}" class="btn btn-light btn-sm" style="float: right;">
                                     <i class="bi bi-pencil"></i> 
                                 <a href="{% url 'eliminarNotificacionEspecial' notificaciones.id %}" class="btn btn-danger btn-sm" style="float: right; margin-right: 5px;" >
                                     <i class="bi bi-trash"></i>
                                 </a>
+                            </div>
                             {% endif %}
                         </h5>
                         

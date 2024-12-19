@@ -29,7 +29,7 @@ SECRET_KEY = env("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.bool("DEBUG", default=False)
 
-ALLOWED_HOSTS = ['18.188.206.33','localhost', '127.0.0.1','tiapepy.hopto.org']
+ALLOWED_HOSTS = ['18.188.206.33','localhost', '127.0.0.1','tiapepy.hopto.org', 'www.tiapepy.hopto.org',]
 
 
 # Application definition

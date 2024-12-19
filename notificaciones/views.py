@@ -49,9 +49,6 @@ def editarNotificacion(request, id):
 def eliminarNotificacion(request, id):
     notificacion = get_object_or_404(Notificacion, id=id)
 
-    if request.user != notificacion.autor:
-        return redirect('notificaciones')
-
     if request.method == 'POST':
         notificacion.delete()
         return redirect('notificaciones')

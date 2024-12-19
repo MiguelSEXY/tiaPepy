@@ -26,15 +26,16 @@
                 <div class="card text-white bg-secondary mb-3 d-flex flex-column" style="min-height: 450px;">
                     <img src="{{ notificaciones.imagen.url }}" class="card-img-top" alt="{{ notificaciones.titulo }}" height="250px" width="100%">
                     <div class="card-body">
-                        <h5 class="card-title">{{ notificaciones.titulo }}
-                            {% if request.user|pertenece_a_grupo:"Vendedor" %}
-                                <a href="{% url 'editar_notificacion' notificaciones.id %}" class="btn btn-light btn-sm" style="float: right;">
+                        <h5 class="card-title">{{ notificaciones.titulo }}</h5>
+                        {% if request.user|pertenece_a_grupo:"Vendedor" %}
+                            <div class="container"> 
+                                <a href="{% url 'editarNotificacionEspecial' notificaciones.id %}" class="btn btn-light btn-sm" style="float: right;">
                                     <i class="bi bi-pencil"></i> 
-                                <a href="{% url 'eliminar_notificacion' notificaciones.id %}" class="btn btn-danger btn-sm" style="float: right; margin-right: 5px;" >
+                                <a href="{% url 'eliminarNotificacionEspecial' notificaciones.id %}" class="btn btn-danger btn-sm" style="float: right; margin-right: 5px;" >
                                     <i class="bi bi-trash"></i>
                                 </a>
-                            {% endif %}
-                        </h5>
+                            </div>
+                        {% endif %}
                         
                         <p class="card-text">{{ notificaciones.contenido|linebreaks }}</p> 
                         <p class="card-text" style="font-size: 12px;">Creado el {{ notificaciones.creacion|date:"d M Y" }}</p>
